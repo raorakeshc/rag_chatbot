@@ -1,18 +1,18 @@
-# HR Support Chatbot - RAG Application
+# Support Chatbot - RAG Application
 
-A smart HR Support Assistant powered by Retrieval-Augmented Generation (RAG) that answers employee questions based on company HR documents and policies.
+A smart HR Support Assistant powered by Retrieval-Augmented Generation (RAG) that answers employee questions based on company  documents and policies.
 
 ## 🎯 Overview
 
-This application combines advanced AI technologies to provide instant, accurate HR support by:
-- **Retrieving** relevant information from company HR documents
+This application combines advanced AI technologies to provide instant, accurate  support by:
+- **Retrieving** relevant information from company  documents
 - **Augmenting** queries with document-based context
 - **Generating** intelligent, policy-aligned responses using Google's Gemini LLM
 
 ## ✨ Features
 
 - 💬 **Conversational UI** - Streamlit-based web interface with message history
-- 📚 **Document-Based Responses** - Answers backed by actual HR policy documents
+- 📚 **Document-Based Responses** - Answers backed by actual  documents
 - 🧠 **Context Memory** - Maintains conversation history for coherent multi-turn dialogs
 - 🚀 **Fast Retrieval** - FAISS vector database for efficient document search
 - 🤖 **AI-Powered** - Google Generative AI (Gemini) for natural language responses
