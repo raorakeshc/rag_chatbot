@@ -1,0 +1,10 @@
+langchain==0.3.27
+langchain-openai==0.3.33
+langchain-community==0.3.24
+langchain-huggingface
+sentence-transformers
+faiss-cpu
+streamlit>=1.28.0
+python-dotenv
+langchain-google-genai
+google-generativeai
