@@ -10,7 +10,7 @@ import time
 # PAGE CONFIG
 # -----------------------------------------
 st.set_page_config(
-    page_title="HR Support Chatbot",
+    page_title="Support Chatbot",
     page_icon="💼",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -183,8 +183,8 @@ if "message_count" not in st.session_state:
 # -----------------------------------------
 st.markdown("""
     <div class="header-container">
-        <h1>💼 HR Support Chatbot</h1>
-        <p>Your intelligent assistant for HR policies and company guidelines</p>
+        <h1>💼 Support Chatbot</h1>
+        <p>Your intelligent assistant for policies and company guidelines</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -200,7 +200,7 @@ with col1:
     chat_container = st.container(border=True)
     with chat_container:
         if not st.session_state.chat_history:
-            st.info("👋 Start a conversation by asking a question about HR policies!")
+            st.info("👋 Start a conversation by asking a question about policies!")
         else:
             for i, msg in enumerate(st.session_state.chat_history):
                 if msg["role"] == "user":
@@ -215,7 +215,7 @@ with col1:
                     st.markdown(f"""
                         <div class="chat-message assistant-message">
                             <div class="message-content">
-                                <b>🤖 HR Bot:</b><br>{msg['content']}
+                                <b>🤖 Bot:</b><br>{msg['content']}
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
@@ -269,7 +269,7 @@ if submit_btn and user_input.strip():
     st.session_state.message_count += 1
     
     # Get response from chatbot with loading animation
-    with st.spinner("🤔 HR Bot is thinking..."):
+    with st.spinner("🤔 Bot is thinking..."):
         try:
             response = get_response(user_input, st.session_state.memory)
             
@@ -303,16 +303,16 @@ if st.sidebar.button("🗑️ Clear Chat History", use_container_width=True):
 st.sidebar.markdown("---")
 st.sidebar.markdown("### ℹ️ About")
 st.sidebar.markdown("""
-**HR Support Chatbot** uses AI to answer your HR questions instantly.
+** Support Chatbot** uses AI to answer your questions instantly.
 
 **Features:**
 - 🧠 Conversation memory (last 10 exchanges)
-- 📚 Company HR knowledge base
+- 📚 Company  knowledge base
 - ⚡ Instant responses
 - 🔒 Privacy-focused
 
 **How it works:**
-1. Ask your HR question
+1. Ask your question
 2. Bot searches the knowledge base
 3. Get instant, policy-aligned answers
 """)
