@@ -262,6 +262,9 @@ For issues or questions:
 └───────────────────────────────────────┘
 ```
 
+<img width="1898" height="802" alt="image" src="https://github.com/user-attachments/assets/724e7649-ccad-4499-8104-cfed5b272d79" />
+
+
 ---
 
 **Version**: 1.0  
