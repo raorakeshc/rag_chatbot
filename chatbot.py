@@ -5,6 +5,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import ChatPromptTemplate
 from collections import deque
+import streamlit as st
 
 # -----------------------------------------
 # ENV
@@ -31,7 +32,8 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
 llm = ChatGoogleGenerativeAI(
     model="gemini-3-flash-preview",
     temperature=0,
-    google_api_key=os.getenv("GOOGLE_API_KEY")
+    #google_api_key=os.getenv("GOOGLE_API_KEY")
+    google_api_key = st.secrets["GOOGLE_API_KEY"]
 )
 
 # -----------------------------------------
