@@ -12,7 +12,7 @@ import streamlit as st
 # -----------------------------------------
 load_dotenv()
 
-VECTOR_DB_PATH = "hr_faiss_index"
+VECTOR_DB_PATH = "faiss_index"
 
 # -----------------------------------------
 # LOAD VECTOR DB
@@ -40,21 +40,21 @@ llm = ChatGoogleGenerativeAI(
 # PROMPT
 # -----------------------------------------
 prompt = ChatPromptTemplate.from_template("""
-You are an HR Support Assistant.
+You are an Support Assistant.
 
-Answer employee questions using ONLY the provided company documents.
+Answer questions using ONLY the provided documents.
 If the answer is not found in the documents, say:
-"I’m not sure based on current HR policies."
+"I’m not sure based on current information available."
 
-Be clear, professional, and policy-aligned.
+Be clear, professional, and aligned with the information provided.
 
 Conversation History:
 {history}
 
-HR Context:
+Context:
 {context}
 
-Employee Question:
+Question:
 {question}
 """)
 
@@ -77,7 +77,7 @@ def chat():
 
         # format conversation history for prompt
         history_text = "\n\n".join(
-            f"Employee: {q}\nHR Bot: {a}" for q, a in memory
+            f"User: {q}\nAssistant: {a}" for q, a in memory
         )
 
         response = llm.invoke(
@@ -88,7 +88,7 @@ def chat():
             )
         )
 
-        print("\nHR Bot:", response.content)
+        print("\nAssistant:", response.content)
         print("-" * 60)
 
         # append this exchange to session memory

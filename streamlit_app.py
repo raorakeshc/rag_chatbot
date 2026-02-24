@@ -3,7 +3,7 @@ Streamlit UI for HR Support Chatbot with memory.
 """
 import streamlit as st
 from collections import deque
-from hr_core import get_response
+from user_core import get_response
 import time
 
 # -----------------------------------------
@@ -249,7 +249,7 @@ col_input, col_btn = st.columns([4, 1], gap="small")
 with col_input:
     user_input = st.text_input(
         "Your question:",
-        placeholder="e.g., What is the annual leave policy? How do I request leave?",
+        placeholder="e.g., What is the supply chain management?",
         label_visibility="collapsed",
         key="user_input"
     )
@@ -271,7 +271,7 @@ if submit_btn and user_input.strip():
     # Get response from chatbot with loading animation
     with st.spinner("🤔 Bot is thinking..."):
         try:
-            response = get_response(user_input, st.session_state.memory)
+            response = get_response(user_input, tuple(st.session_state.memory))
             
             # Add assistant message to history
             st.session_state.chat_history.append({

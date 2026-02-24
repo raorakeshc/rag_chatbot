@@ -9,13 +9,14 @@ from collections import deque
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_google_genai import ChatGoogleGenerativeAI
 import streamlit as st
+from functools import lru_cache
 
 # -----------------------------------------
 # ENV
 # -----------------------------------------
 load_dotenv()
 
-VECTOR_DB_PATH = "hr_faiss_index"
+VECTOR_DB_PATH = "faiss_index"
 
 # -----------------------------------------
 # LOAD VECTOR DB
@@ -36,37 +37,46 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
 llm = ChatGoogleGenerativeAI(
     model="gemini-3-flash-preview",
     temperature=0,
-    #google_api_key=os.getenv("GOOGLE_API_KEY")
-    google_api_key = st.secrets["GOOGLE_API_KEY"]
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+    #google_api_key = st.secrets["GOOGLE_API_KEY"]
 )
 
 # -----------------------------------------
 # PROMPT
 # -----------------------------------------
 prompt = ChatPromptTemplate.from_template("""
-You are an HR Support Assistant.
+You are an Support Assistant.
 
-Answer employee questions using ONLY the provided company documents.
+Answer questions using ONLY the provided  documents.
 If the answer is not found in the documents, say:
-"I'm not sure based on current HR policies."
+"I'm not sure based on current information available."
 
-Be clear, professional, and policy-aligned.
+Be clear, professional, and aligned with the information provided.
 
 Conversation History:
 {history}
 
-HR Context:
+Context:
 {context}
 
-Employee Question:
+Question:
 {question}
 """)
 
 
+
+@lru_cache(maxsize=128)
+def get_relevant_docs(question: str) -> str:
+    """
+    Retrieve relevant documents from the vector store based on the question, with caching.
+    """
+    print(f"CHACHE-DEBUG: Retrieving docs for question: {question}")
+    docs = retriever.invoke(question)
+    return "\n\n".join(doc.page_content for doc in docs)
 # -----------------------------------------
 # CORE FUNCTION (Reusable)
 # -----------------------------------------
-def get_response(question: str, memory: deque) -> str:
+def get_response(question: str, memory: tuple) -> str:
     """
     Get a response from the HR chatbot.
     
@@ -77,12 +87,13 @@ def get_response(question: str, memory: deque) -> str:
     Returns:
         Response text from the LLM
     """
-    docs = retriever.invoke(question)
-    context = "\n\n".join(doc.page_content for doc in docs)
+    context = get_relevant_docs(question)
+    #docs = retriever.invoke(question)
+    #context = "\n\n".join(doc.page_content for doc in docs)
 
     # format conversation history for prompt
     history_text = "\n\n".join(
-        f"Employee: {q}\nHR Bot: {a}" for q, a in memory
+        f"User: {q}\nAssistant: {a}" for q, a in memory
     )
 
     response = llm.invoke(

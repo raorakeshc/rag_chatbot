@@ -11,7 +11,7 @@ from langchain_community.vectorstores import FAISS
 load_dotenv()
 
 DATA_FOLDER = "documents"
-VECTOR_DB_PATH = "hr_faiss_index"
+VECTOR_DB_PATH = "faiss_index"
 
 # -----------------------------------------
 # LOAD PDFs
