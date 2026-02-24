@@ -47,4 +47,4 @@ embeddings = HuggingFaceEmbeddings(model="sentence-transformers/all-MiniLM-L6-v2
 vectorstore = FAISS.from_documents(chunks, embeddings)
 vectorstore.save_local(VECTOR_DB_PATH)
 
-print("HR knowledge base successfully indexed")
+print("knowledge base successfully indexed")
